@@ -1,1 +1,15 @@
-<div>notification-area</div>
+<div class="data-container">
+  <div class="notification-display">
+    <div *ngFor="let notification of notifications" class="notification box">
+      {{ notification.id + ' - ' + notification.message }}
+    </div>
+  </div>
+  <mat-paginator (page)="handlePageEvent($event)"
+                 [pageIndex]="pageIndex"
+                 [pageSize]="pageSize"
+                 [length]="totalCount"
+                 [disabled]="totalCount === 0"
+                 [showFirstLastButtons]="true"
+                 [pageSizeOptions]="[25, 50, 100]">
+  </mat-paginator>
+</div>

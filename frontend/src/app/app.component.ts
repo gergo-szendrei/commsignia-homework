@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NotificationAreaComponent } from './components/notification-area/notification-area.component';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+  @ViewChild(NotificationAreaComponent) notificationAreaComponent: NotificationAreaComponent | undefined;
   title = 'frontend';
 
   onMarkerClickEmit(vehicleId: number): void {
-    // TODO
+    this.notificationAreaComponent?.handleMarkerClick(vehicleId);
   }
 }

@@ -1,0 +1,28 @@
+app-notification-area {
+  display: block;
+  height: 100%;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.notification-display {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.notification {
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  padding-top: 5px;
+  width: 250px;
+  height: 25px;
+  text-align: center;
+}
