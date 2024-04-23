@@ -14,6 +14,7 @@ public interface VehicleRepository extends ListCrudRepository<VehicleEntity, Lon
 	@Query("""
 				select v from VehicleEntity v 
 				where st_distancesphere(st_point(:longitude, :latitude), st_point(v.longitude, v.latitude)) < :radius
+				and (:longitude != v.longitude or :latitude != v.latitude)
 			""")
 	List<VehicleEntity> getVehiclesInRadius(
 			@Param("latitude") Double latitude,
