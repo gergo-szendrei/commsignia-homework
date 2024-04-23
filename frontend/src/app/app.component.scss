@@ -1,0 +1,14 @@
+.full-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.map-area-container {
+  height: 80%;
+}
+
+.notification-area-container {
+  height: 20%;
+}
