@@ -1,0 +1,19 @@
+<google-map [ngClass]="{'hidden': vehicles.length === 0}"
+            height="100%"
+            width="100%"
+            [zoom]="zoom"
+            [center]="center"
+            [options]="options"
+            mapId="mainMap">
+  <!-- It is deprecated, but currently supported, makes labeling easier -->
+  <map-marker *ngFor="let vehicle of vehicles"
+              [position]="{ lat: vehicle.latitude, lng: vehicle.longitude }"
+              [title]="vehicle.id + ''"
+              [label]="vehicle.id + ''"
+              (mapClick)="handleMarkerClick(vehicle.id)"/>
+</google-map>
+<div *ngIf="vehicles.length === 0" class="no-data-container">
+  <div class="no-data box">
+    Currently no vehicle data is available.
+  </div>
+</div>

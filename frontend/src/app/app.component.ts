@@ -8,4 +8,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  onMarkerClickEmit(vehicleId: number): void {
+    // TODO
+  }
 }

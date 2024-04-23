@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { MapAreaComponent } from './components/map/map-area.component';
+import { MapAreaComponent } from './components/map-area/map-area.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationAreaComponent } from './components/notification-area/notification-area.component';
 import { MatPaginatorModule } from '@angular/material/paginator';

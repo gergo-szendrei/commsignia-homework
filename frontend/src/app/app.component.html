@@ -1,6 +1,6 @@
 <div class="full-screen">
   <div class="map-area-container">
-    <app-map-area></app-map-area>
+    <app-map-area (markerClickEmit)="onMarkerClickEmit($event)"></app-map-area>
   </div>
   <div class="notification-area-container">
     <app-notification-area></app-notification-area>

@@ -1,0 +1,21 @@
+app-map-area {
+  display: block;
+  height: 100%;
+  border-bottom: 2px solid lightslategray;
+}
+
+.no-data-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.no-data {
+  font-size: 2rem;
+  padding: 2rem;
+}
+
+.hidden {
+  display: none;
+}
