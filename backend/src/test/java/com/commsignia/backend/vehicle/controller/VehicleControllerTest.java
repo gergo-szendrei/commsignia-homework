@@ -9,14 +9,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import com.commsignia.backend.vehicle.dto.Position;
 import com.commsignia.backend.vehicle.dto.RegisterResponse;
 import com.commsignia.backend.vehicle.dto.Vehicle;
 import com.commsignia.backend.vehicle.dto.VehiclesResponse;
 import com.commsignia.backend.vehicle.service.VehicleService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -66,5 +70,22 @@ class VehicleControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(VEHICLE_ID_A));
 		verify(vehicleService, times(1)).registerVehicle();
+	}
+
+	@Test
+	void updatePositionShouldPassCorrectParameters() throws Exception {
+		Position position = Position.builder().latitude(1D).longitude(2D).build();
+
+		mvc.perform(MockMvcRequestBuilders
+						.post("/vehicle/" + VEHICLE_ID_A)
+						.content(toJsonString(position))
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+		verify(vehicleService, times(1)).updatePosition(VEHICLE_ID_A, position);
+	}
+
+	private String toJsonString(Position position) throws JsonProcessingException {
+		return new ObjectMapper().writeValueAsString(position);
 	}
 }

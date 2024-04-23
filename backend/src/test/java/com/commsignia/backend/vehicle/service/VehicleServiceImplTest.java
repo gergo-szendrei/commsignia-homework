@@ -1,12 +1,16 @@
 package com.commsignia.backend.vehicle.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.commsignia.backend.shared.CustomRuntimeException;
+import com.commsignia.backend.vehicle.dto.Position;
 import com.commsignia.backend.vehicle.dto.RegisterResponse;
 import com.commsignia.backend.vehicle.dto.Vehicle;
 import com.commsignia.backend.vehicle.dto.VehiclesResponse;
@@ -95,6 +99,29 @@ class VehicleServiceImplTest {
 
 		RegisterResponse registerResponse = vehicleService.registerVehicle();
 		assertThat(registerResponse.getId()).isEqualTo(VEHICLE_ID_A);
+	}
+
+	@Test
+	void updatePositionShouldCallRepositoryWithCorrectParameters() {
+		Position position = Position.builder().latitude(1D).longitude(2D).build();
+		VehicleEntity editedVehicleEntityA = getVehicleEntity(VEHICLE_ID_A, 1D, 2D);
+
+		VehicleEntity vehicleEntityA = getVehicleEntity(VEHICLE_ID_A, 11D, 12D);
+		doReturn(Optional.of(vehicleEntityA)).when(vehicleRepository).findById(VEHICLE_ID_A);
+
+		vehicleService.updatePosition(VEHICLE_ID_A, position);
+		verify(vehicleRepository, times(1)).findById(VEHICLE_ID_A);
+		verify(vehicleRepository, times(1)).save(editedVehicleEntityA);
+	}
+
+	@Test
+	void updatePositionShouldThrowExceptionIfVehicleNotFound() {
+		Position position = Position.builder().latitude(1D).longitude(2D).build();
+
+		CustomRuntimeException e = assertThrows(CustomRuntimeException.class,
+				() -> vehicleService.updatePosition(VEHICLE_ID_A, position));
+		assertThat(e.getMessage()).isEqualTo(
+				"Cannot update position. Vehicle by id " + VEHICLE_ID_A + " cannot be found.");
 	}
 
 	private VehicleEntity getVehicleEntity(Long id, Double latitude, Double longitude) {

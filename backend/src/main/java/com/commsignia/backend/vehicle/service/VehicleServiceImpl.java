@@ -1,7 +1,10 @@
 package com.commsignia.backend.vehicle.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.commsignia.backend.shared.CustomRuntimeException;
+import com.commsignia.backend.vehicle.dto.Position;
 import com.commsignia.backend.vehicle.dto.RegisterResponse;
 import com.commsignia.backend.vehicle.dto.Vehicle;
 import com.commsignia.backend.vehicle.dto.VehiclesResponse;
@@ -36,5 +39,18 @@ public class VehicleServiceImpl implements VehicleService {
 		return RegisterResponse.builder()
 				.id(vehicleEntity.getId())
 				.build();
+	}
+
+	@Override
+	public void updatePosition(Long id, Position position) {
+		Optional<VehicleEntity> optional = vehicleRepository.findById(id);
+		if (optional.isEmpty()) {
+			throw new CustomRuntimeException(String.format("Cannot update position. Vehicle by id %1$s cannot be found.", id));
+		}
+		VehicleEntity vehicleEntity = optional.get();
+		vehicleEntity.setLatitude(position.getLatitude());
+		vehicleEntity.setLongitude(position.getLongitude());
+		// It would save even without calling save explicitly, but this approach helps testability
+		vehicleRepository.save(vehicleEntity);
 	}
 }
