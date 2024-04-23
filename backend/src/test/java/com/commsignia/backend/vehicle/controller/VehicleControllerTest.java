@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import com.commsignia.backend.vehicle.dto.RegisterResponse;
 import com.commsignia.backend.vehicle.dto.Vehicle;
 import com.commsignia.backend.vehicle.dto.VehiclesResponse;
 import com.commsignia.backend.vehicle.service.VehicleService;
@@ -53,5 +54,17 @@ class VehicleControllerTest {
 				.andExpect(jsonPath("$.vehicles.[1].latitude").value(21D))
 				.andExpect(jsonPath("$.vehicles.[1].longitude").value(22D));
 		verify(vehicleService, times(1)).getVehiclesInRadius(1D, 2D, 3L);
+	}
+
+	@Test
+	void registerVehicleShouldPassCorrectParametersAndReturnCorrectData() throws Exception {
+		RegisterResponse registerResponse = RegisterResponse.builder().id(VEHICLE_ID_A).build();
+		doReturn(registerResponse).when(vehicleService).registerVehicle();
+
+		mvc.perform(MockMvcRequestBuilders
+						.post("/vehicles"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").value(VEHICLE_ID_A));
+		verify(vehicleService, times(1)).registerVehicle();
 	}
 }

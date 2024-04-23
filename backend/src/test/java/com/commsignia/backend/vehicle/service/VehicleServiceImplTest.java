@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
+import com.commsignia.backend.vehicle.dto.RegisterResponse;
 import com.commsignia.backend.vehicle.dto.Vehicle;
 import com.commsignia.backend.vehicle.dto.VehiclesResponse;
 import com.commsignia.backend.vehicle.entity.VehicleEntity;
@@ -74,6 +75,26 @@ class VehicleServiceImplTest {
 		assertThat(vehicleB.getId()).isEqualTo(VEHICLE_ID_B);
 		assertThat(vehicleB.getLatitude()).isEqualTo(21D);
 		assertThat(vehicleB.getLongitude()).isEqualTo(22D);
+	}
+
+	@Test
+	void registerVehicleShouldCallRepositoryWithCorrectParameters() {
+		VehicleEntity emptyVehicleEntity = new VehicleEntity();
+		VehicleEntity vehicleEntityA = getVehicleEntity(VEHICLE_ID_A, 11D, 12D);
+		doReturn(vehicleEntityA).when(vehicleRepository).save(emptyVehicleEntity);
+
+		vehicleService.registerVehicle();
+		verify(vehicleRepository, times(1)).save(emptyVehicleEntity);
+	}
+
+	@Test
+	void registerVehicleShouldMapDataCorrectlyToRegisterResponse() {
+		VehicleEntity emptyVehicleEntity = new VehicleEntity();
+		VehicleEntity vehicleEntityA = getVehicleEntity(VEHICLE_ID_A, 11D, 12D);
+		doReturn(vehicleEntityA).when(vehicleRepository).save(emptyVehicleEntity);
+
+		RegisterResponse registerResponse = vehicleService.registerVehicle();
+		assertThat(registerResponse.getId()).isEqualTo(VEHICLE_ID_A);
 	}
 
 	private VehicleEntity getVehicleEntity(Long id, Double latitude, Double longitude) {
