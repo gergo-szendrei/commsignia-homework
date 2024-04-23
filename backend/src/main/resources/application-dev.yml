@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres_db"
+    username: postgres_user
+    password: postgres_password
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace
