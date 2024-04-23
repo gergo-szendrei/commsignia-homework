@@ -29,6 +29,15 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
+	public VehiclesResponse getVehiclesWithPosition() {
+		LOGGER.info("Get vehicles with position service called");
+		List<Vehicle> vehicles = vehicleRepository.getVehiclesWithPosition().stream()
+				.map(Vehicle::toVehicle)
+				.toList();
+		return VehiclesResponse.builder().vehicles(vehicles).build();
+	}
+
+	@Override
 	public VehiclesResponse getVehiclesInRadius(Double latitude, Double longitude, Long radius) {
 		LOGGER.info("Get vehicles in radius service called with latitude {}, longitude {}, radius {}",
 				latitude, longitude, radius);

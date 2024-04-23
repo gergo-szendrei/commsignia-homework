@@ -38,6 +38,26 @@ class VehicleControllerTest {
 	private VehicleService vehicleService;
 
 	@Test
+	void getVehiclesWithPositionShouldPassCorrectParametersAndReturnCorrectData() throws Exception {
+		Vehicle vehicleA = Vehicle.builder().id(VEHICLE_ID_A).latitude(11D).longitude(12D).build();
+		Vehicle vehicleB = Vehicle.builder().id(VEHICLE_ID_B).latitude(21D).longitude(22D).build();
+		List<Vehicle> vehicles = List.of(vehicleA, vehicleB);
+		VehiclesResponse vehiclesResponse = VehiclesResponse.builder().vehicles(vehicles).build();
+		doReturn(vehiclesResponse).when(vehicleService).getVehiclesWithPosition();
+
+		mvc.perform(MockMvcRequestBuilders
+						.get("/vehicles/all"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.vehicles.[0].id").value(VEHICLE_ID_A))
+				.andExpect(jsonPath("$.vehicles.[0].latitude").value(11D))
+				.andExpect(jsonPath("$.vehicles.[0].longitude").value(12D))
+				.andExpect(jsonPath("$.vehicles.[1].id").value(VEHICLE_ID_B))
+				.andExpect(jsonPath("$.vehicles.[1].latitude").value(21D))
+				.andExpect(jsonPath("$.vehicles.[1].longitude").value(22D));
+		verify(vehicleService, times(1)).getVehiclesWithPosition();
+	}
+
+	@Test
 	void getVehiclesInRadiusShouldPassCorrectParametersAndReturnCorrectData() throws Exception {
 		Vehicle vehicleA = Vehicle.builder().id(VEHICLE_ID_A).latitude(11D).longitude(12D).build();
 		Vehicle vehicleB = Vehicle.builder().id(VEHICLE_ID_B).latitude(21D).longitude(22D).build();

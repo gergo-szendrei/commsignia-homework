@@ -7,6 +7,7 @@ import com.commsignia.backend.vehicle.service.VehicleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,14 @@ public class VehicleController {
 
 	public VehicleController(VehicleService vehicleService) {
 		this.vehicleService = vehicleService;
+	}
+
+	@GetMapping("vehicles/all")
+	// This is only valid for this demo app, in prod origins must be set properly
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<VehiclesResponse> getVehiclesWithPosition() {
+		LOGGER.info("Get vehicles with position controller called");
+		return ResponseEntity.ok(vehicleService.getVehiclesWithPosition());
 	}
 
 	@GetMapping("vehicles")
