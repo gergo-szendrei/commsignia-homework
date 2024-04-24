@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  database:
+    image: 'postgis/postgis:16-3.4'
+    platform: linux/amd64
+    container_name: database
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=postgres_db
+    ports:
+      - '5432:5432'
+  backend:
+    build:
+      context: ./backend
+    image: 'backend'
+    platform: linux/amd64
+    container_name: backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres_db
+      - SPRING_DATASOURCE_USERNAME=postgres_user
+      - SPRING_DATASOURCE_PASSWORD=postgres_password
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
+  frontend:
+    build:
+      context: ./frontend
+    image: 'frontend'
+    platform: linux/amd64
+    container_name: frontend
+    environment:
+      - BACKEND_URL=http://localhost:8080
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
