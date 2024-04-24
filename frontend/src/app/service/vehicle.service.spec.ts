@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { VehicleService } from './vehicle.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environments/environment';
 import { Vehicle, VehiclesResponse } from '../model/vehicle.model';
 
 describe('VehicleService', () => {

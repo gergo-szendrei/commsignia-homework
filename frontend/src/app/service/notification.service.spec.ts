@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NotificationService } from './notification.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environments/environment';
 import { NotificationsResponse } from '../model/notification.model';
 
 describe('NotificationService', () => {
