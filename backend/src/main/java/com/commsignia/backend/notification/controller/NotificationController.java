@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// This is only valid for this demo app, in prod origins must be set properly
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
@@ -27,8 +29,6 @@ public class NotificationController {
 	}
 
 	@GetMapping
-	// This is only valid for this demo app, in prod origins must be set properly
-	@CrossOrigin(origins = "*")
 	public ResponseEntity<NotificationsResponse> getNotificationsForVehicle(
 			@RequestParam(value = "vehicleId") Long vehicleId,
 			@RequestParam(value = "pageNumber") Integer pageNumber,

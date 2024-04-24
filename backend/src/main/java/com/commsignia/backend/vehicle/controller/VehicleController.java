@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// This is only valid for this demo app, in prod origins must be set properly
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/")
 public class VehicleController {
@@ -29,8 +31,6 @@ public class VehicleController {
 	}
 
 	@GetMapping("vehicles/all")
-	// This is only valid for this demo app, in prod origins must be set properly
-	@CrossOrigin(origins = "*")
 	public ResponseEntity<VehiclesResponse> getVehiclesWithPosition() {
 		LOGGER.info("Get vehicles with position controller called");
 		return ResponseEntity.ok(vehicleService.getVehiclesWithPosition());
