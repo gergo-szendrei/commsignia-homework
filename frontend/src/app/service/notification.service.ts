@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, Subscription } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NotificationsResponse } from '../model/notification.model';
-import { environment } from '../../environment/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
