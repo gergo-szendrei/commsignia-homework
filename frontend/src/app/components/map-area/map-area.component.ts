@@ -23,7 +23,7 @@ export class MapAreaComponent implements OnInit, AfterViewInit, OnDestroy {
     scrollwheel: false,
     disableDoubleClickZoom: true,
     maxZoom: 15,
-    minZoom: 9
+    minZoom: 1
   };
 
   @Output() readonly markerClickEmit = new EventEmitter<number>();
